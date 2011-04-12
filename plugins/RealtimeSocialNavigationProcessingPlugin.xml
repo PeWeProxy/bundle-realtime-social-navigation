@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plugin SYSTEM "PluginConfiguration.dtd">
+<plugin>
+	<name>RealtimeSocialNavigationProcessingPlugin</name>
+	<classLocation/>
+	<className>sk.fiit.rabbit.adaptiveproxy.plugins.services.peoplemeter.RealtimeSocialNavigationProcessingPlugin</className>
+	<libraries>
+    	
+  	</libraries>
+	<types>
+		<type>RequestProcessingPlugin</type>
+		<type>ResponseProcessingPlugin</type>
+	</types>
+	<parameters>
+		<param name="bypassPattern">adaptive-proxy/peoplemeter_call</param>
+		<param name="generateResponse">true</param>
+		<param name="defaultVisibility">0</param>
+		<param name="scriptUrl">${plugins-core:proxyurl}/FileSender/public/peweproxy_peoplemeter.js</param>
+				<param name="menuWindowHTML">
+<![CDATA[
+
+		<style type="text/css">
+			a.__proxy_peoplemeter_button{
+				background-image: url("${plugins-core:proxyurl}/FileSender/public/peoplemeterImages/signDirection.png");
+				color:#2F2F2F;
+				display:block;
+				font-size:10px;
+				height:19px;
+				margin-left: 10px;
+				margin-top:2px;
+				padding-left:0;
+				padding-top:1px;
+				text-align:center;
+				text-decoration:none;
+				width:20px;
+				float: left;
+			}
+			
+			#__proxy_peoplemeterBubble { font-size: 12px; width: 142px; background-repeat: no-repeat; color: #2F2F2F; }
+            #__proxy_peoplemeterBubble .__proxy_top_T { background-image: url("${plugins-core:proxyurl}/FileSender/public/peoplemeterImages/top_T.png"); height: 14px; }
+            #__proxy_peoplemeterBubble .__proxy_top_BR { background-image: url("${plugins-core:proxyurl}/FileSender/public/peoplemeterImages/top_BR.png"); height: 24px; }
+            #__proxy_peoplemeterBubble .__proxy_top_BL { background-image: url("${plugins-core:proxyurl}/FileSender/public/peoplemeterImages/top_BL.png"); height: 24px; }
+            #__proxy_peoplemeterBubble .__proxy_middle { background-image: url("${plugins-core:proxyurl}/FileSender/public/peoplemeterImages/middle.png"); background-repeat: repeat-y; padding-left: 15px; padding-right: 15px; padding-top: 0; padding-bottom: 0; }
+            #__proxy_peoplemeterBubble .__proxy_bottom_B  { background-image: url("${plugins-core:proxyurl}/FileSender/public/peoplemeterImages/bottom_B.png"); background-repeat: no-repeat; height: 14px; }
+            #__proxy_peoplemeterBubble .__proxy_bottom_TL  { background-image: url("${plugins-core:proxyurl}/FileSender/public/peoplemeterImages/bottom_TL.png"); background-repeat: no-repeat; height: 24px; }
+            #__proxy_peoplemeterBubble .__proxy_bottom_TR  { background-image: url("${plugins-core:proxyurl}/FileSender/public/peoplemeterImages/bottom_TR.png"); background-repeat: no-repeat; height: 24px; }
+            #__proxy_counter { font-weight: bold; text-decoration: underline; }
+
+            #__proxy_peoplemeterMenu { position: absolute; right: 0; top: 0; width: 332px; color: #2F2F2F; font-family: 'Trebuchet MS',Verdana,Arial; font-size: 12px; text-align: left; }
+            .__proxy_peoplemeter_head { background-image: url("${plugins-core:proxyurl}/FileSender/public/clientBubbleMenuImages/panel_top.png"); float: left; height: 25px; width: 332px; }
+            .__proxy_peoplemeter_head .__proxy_peoplemeter_closebutton { background-image: url("${plugins-core:proxyurl}/FileSender/public/clientBubbleMenuImages/close_button.png"); background-position: center top; display: block; height: 22px; position: absolute; right: 1px; top: 1px; width: 22px; }
+            .__proxy_peoplemeter_head .__proxy_peoplemeter_closebutton:hover { background-position: bottom; }
+
+            .__proxy_peoplemeter_body { background-image: url("${plugins-core:proxyurl}/FileSender/public/clientBubbleMenuImages/panel_body.png"); float: left; height: 177px; padding: 0 20px 0 16px; width: 296px; }
+            .__proxy_peoplemeter_body .__proxy_peoplemeter_header { background-image: url("${plugins-core:proxyurl}/FileSender/public/peoplemeterImages/signDirection.png"); font-size: 17px; background-repeat: no-repeat; padding-left: 28px; background-position: 0 1px; }
+            .__proxy_peoplemeter_body .__proxy_peoplemeter_header .__proxy_peoplemeter_left_floated {}
+
+            .__proxy_peoplemeter_textBox_Wrapper {}
+            .__proxy_peoplemeter_textBox_Wrapper .__proxy_peoplemeter_textBox { height: 100px; margin-top: 11px; }
+            .__proxy_peoplemeter_textBox_Wrapper .__proxy_peoplemeter_textBox .__proxy_peoplemeter_serviceActivated { text-align: center; display: none; }
+            .__proxy_peoplemeter_textBox_Wrapper .__proxy_peoplemeter_textBox .__proxy_peoplemeter_serviceDeactivated { text-align: center; display: none; }
+            .__proxy_peoplemeter_textBox_Wrapper .__proxy_peoplemeter_textBox .__proxy_peoplemeter_serviceActivated  a { margin-top: 20px; }
+            .__proxy_peoplemeter_textBox_Wrapper .__proxy_peoplemeter_textBox .__proxy_peoplemeter_activity_button { background-color: #FFF993; border: 1px solid #78731E; color: #2F2F2F; margin-left: 5px; margin-right: 5px; margin-top: 2px; padding: 1px 5px; text-decoration: none; }
+            
+            .__proxy_peoplemeter_foot { background-image: url("${plugins-core:proxyurl}/FileSender/public/clientBubbleMenuImages/panel_bottom.png"); float: left; height: 16px; width: 332px; }
+			
+		</style>
+
+
+		<div style="display: none;" id="__proxy_peoplemeterMenu">
+            <div class="__proxy_peoplemeter_head">
+                    <a href="#" class="__proxy_peoplemeter_closebutton"></a>
+            </div>
+            <div class="__proxy_peoplemeter_body">
+                    <span class="__proxy_peoplemeter_header">
+                            <span class="__proxy_peoplemeter_left_floated">Sledovanie aktívnych užívateľov</span>
+                    </span>
+                    <div class="__proxy_peoplemeter_textBox_Wrapper">
+                            <div class="__proxy_peoplemeter_textBox" id="__proxy_peoplemeter_textBox">
+                                Po aktivavaní tejto služby môžete pri každom odkaze sledovať koľko ľudí práve prehliada stránku na ktorú smeruje odkaz.<br /><br />
+                                <div id="__proxy_peoplemeter_serviceActivated" class="__proxy_peoplemeter_serviceActivated">Táto služba je momentálne aktívna. Prajete si ju deaktivovať? <p><a class="__proxy_peoplemeter_activity_button" id="__proxy_peoplemeter_deactivateButton" href="#">Deaktivovať</a></p></div>
+                                <div id="__proxy_peoplemeter_serviceDeactivated" class="__proxy_peoplemeter_serviceDeactivated">Táto služba nie je aktivovanť. Prajete si ju aktivovať? <p> <a class="__proxy_peoplemeter_activity_button" id="__proxy_peoplemeter_activateButton" href="#">Aktivovať</a></p></div>
+                            </div>
+                    </div>
+            </div>
+            <div class="__proxy_peoplemeter_foot"></div>
+        </div>
+
+]]>
+		</param>
+		<param name="menuButtonHTML">
+<![CDATA[
+	<a href="#" class="__proxy_peoplemeter_button"></a>
+]]>
+		</param>
+		</parameters>
+</plugin>
