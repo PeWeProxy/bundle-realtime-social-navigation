@@ -8,65 +8,67 @@ var __proxy_peoplemeter_active_after_onload = true;
 
 var temp = function($) {
     $(document).ready(function() {
-       $(peoplemeterButonSelector).click(function(){
-           $('#__proxy_peoplemeterMenu').hide().removeClass('hidden').fadeIn('fast');
-           return false;
-       });
-       $('div#__proxy_peoplemeterMenu a.__proxy_peoplemeter_closebutton').click(function(){
-            $(this).blur();
-            $('#__proxy_peoplemeterMenu').fadeOut('fast');
-            return false;
-        });
-        
-       $("body").append(__proxy_peoplemeter_html);
-       __proxy_initializeTracking();
-
-
-       $.post('adaptive-proxy/peoplemeter_call.html?action=getPeoplemeterActivity&userId=' + __peweproxy_uid, {
-            action: "getPeoplemeterActivity"
-        }, function(data) {
-            if (data === "TRUE") {
-                __proxy_peoplemeter_active = true
-                $("#__proxy_peoplemeter_serviceActivated").css("display", "block");
-                $("#__proxy_peoplemeter_serviceDeactivated").css("display", "none");
-                __proxy_updatePeoplemeter();
-                setInterval("__proxy_updatePeoplemeter()",8000);
-            }
-            else {
-                __proxy_peoplemeter_active = false;
-                $("#__proxy_peoplemeter_serviceActivated").css("display", "none");
-                $("#__proxy_peoplemeter_serviceDeactivated").css("display", "block");
-            }
-        });
-
-        $("#__proxy_peoplemeter_deactivateButton").click(function () {
-            $("#__proxy_peoplemeter_serviceActivated").css("display", "none");
-            $("#__proxy_peoplemeter_serviceDeactivated").css("display", "block");
-            $.post('adaptive-proxy/peoplemeter_call.html?action=setPeoplemeterActivity&activity=false&userId=' + __peweproxy_uid, {
-                action: "setPeoplemeterActivity"
-            }, function(data) {
-                $("#__proxy_peoplemeter").fadeOut(80);
-                if (data == "OK") __proxy_peoplemeter_active = false;
-            });
-        });
-
-        $("#__proxy_peoplemeter_activateButton").click(function () {
-            $("#__proxy_peoplemeter_serviceActivated").css("display", "block");
-            $("#__proxy_peoplemeter_serviceDeactivated").css("display", "none");
-            $.post('adaptive-proxy/peoplemeter_call.html?action=setPeoplemeterActivity&activity=true&userId=' + __peweproxy_uid, {
-                action: "setPeoplemeterActivity"
-            },function(data) {
-                if (data == "OK") {
-                    __proxy_peoplemeter_active = true;
-                    __proxy_updatePeoplemeter();
-                    if (__proxy_peoplemeter_active_after_onload) {
-                        setInterval("__proxy_updatePeoplemeter()",8000);
-                    } else {
-                        __proxy_peoplemeter_active_after_onload = false;
-                    }
-                }
-            });
-        });
+      __ap_register_callback(function(){
+         $(peoplemeterButonSelector).click(function(){
+             $('#__proxy_peoplemeterMenu').hide().removeClass('hidden').fadeIn('fast');
+             return false;
+         });
+         $('div#__proxy_peoplemeterMenu a.__proxy_peoplemeter_closebutton').click(function(){
+              $(this).blur();
+              $('#__proxy_peoplemeterMenu').fadeOut('fast');
+              return false;
+          });
+          
+         $("body").append(__proxy_peoplemeter_html);
+         __proxy_initializeTracking();
+  
+  
+         $.post('adaptive-proxy/peoplemeter_call.html?action=getPeoplemeterActivity&userId=' + __peweproxy_uid, {
+              action: "getPeoplemeterActivity"
+          }, function(data) {
+              if (data === "TRUE") {
+                  __proxy_peoplemeter_active = true
+                  $("#__proxy_peoplemeter_serviceActivated").css("display", "block");
+                  $("#__proxy_peoplemeter_serviceDeactivated").css("display", "none");
+                  __proxy_updatePeoplemeter();
+                  setInterval("__proxy_updatePeoplemeter()",8000);
+              }
+              else {
+                  __proxy_peoplemeter_active = false;
+                  $("#__proxy_peoplemeter_serviceActivated").css("display", "none");
+                  $("#__proxy_peoplemeter_serviceDeactivated").css("display", "block");
+              }
+          });
+  
+          $("#__proxy_peoplemeter_deactivateButton").click(function () {
+              $("#__proxy_peoplemeter_serviceActivated").css("display", "none");
+              $("#__proxy_peoplemeter_serviceDeactivated").css("display", "block");
+              $.post('adaptive-proxy/peoplemeter_call.html?action=setPeoplemeterActivity&activity=false&userId=' + __peweproxy_uid, {
+                  action: "setPeoplemeterActivity"
+              }, function(data) {
+                  $("#__proxy_peoplemeter").fadeOut(80);
+                  if (data == "OK") __proxy_peoplemeter_active = false;
+              });
+          });
+  
+          $("#__proxy_peoplemeter_activateButton").click(function () {
+              $("#__proxy_peoplemeter_serviceActivated").css("display", "block");
+              $("#__proxy_peoplemeter_serviceDeactivated").css("display", "none");
+              $.post('adaptive-proxy/peoplemeter_call.html?action=setPeoplemeterActivity&activity=true&userId=' + __peweproxy_uid, {
+                  action: "setPeoplemeterActivity"
+              },function(data) {
+                  if (data == "OK") {
+                      __proxy_peoplemeter_active = true;
+                      __proxy_updatePeoplemeter();
+                      if (__proxy_peoplemeter_active_after_onload) {
+                          setInterval("__proxy_updatePeoplemeter()",8000);
+                      } else {
+                          __proxy_peoplemeter_active_after_onload = false;
+                      }
+                  }
+              });
+          });
+      });
     });
 } (adaptiveProxyJQuery);
 
