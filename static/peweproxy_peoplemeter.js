@@ -5,6 +5,7 @@ var __proxy_followedPages = new Array;
 var __proxy_peoplemeter_html = '<div id="__proxy_peoplemeterBubble" style="display: none; position: absolute;"><div id="__proxy_peoplemeterTop" class="__proxy_top_TR"></div><div id="__proxy_peoplemeterMiddle" class="__proxy_middle"><span id="__proxy_counter">0</span> ľudí práve prehliada túto stránku</div><div id="__proxy_peoplemeterBottom" class="__proxy_bottom"></div></div>';
 var __proxy_peoplemeter_active = false;
 var __proxy_peoplemeter_active_after_onload = true;
+var __proxy_normalizedUrl = "";
 
 var temp = function($) {
     $(document).ready(function() {
@@ -86,10 +87,10 @@ function __proxy_initializeTracking() {
             $.each(__proxy_forbidenUrls, function(forbidenIndex, forbidenValue) {
                 if ($(value).attr("href") == $(forbidenValue).attr("href")) __proxy_flag = false;
             });
-
             if (__proxy_flag == true) {
                 __proxy_appendHover(value, pageIndex);
-                __proxy_followedPages[pageIndex] = new Array(value, __proxy_normalizeUrl($(value).attr("href")), "-1");
+                __proxy_normalizeUrl($(value).attr("href"));
+                __proxy_followedPages[pageIndex] = new Array(value, __proxy_normalizedUrl, "-1");
                 pageIndex++;
             }
         });
@@ -98,9 +99,33 @@ function __proxy_initializeTracking() {
 
 function __proxy_normalizeUrl(url) {
     var temp = function($) {
-        if ((url.substr(0, 7) != "http://") && (url.substr(0, 7) != "https://")) {
-            return ($(location).attr('href') + url);
+        if ((url.substr(0, 7) != "http://") && (url.substr(0, 8) != "https://")) {
+            if (document.location.pathname.indexOf(".") >= 0) {
+                normalizedUrlPart = document.location.href.substring(0, document.location.href.lastIndexOf("/"));
+                if ((url[0] == "/") || (normalizedUrlPart[normalizedUrlPart.length] == "/")) {
+                    if ((url[0] == "/") && (normalizedUrlPart[normalizedUrlPart.length] == "/")) {
+                        normalizedUrl = normalizedUrlPart + url.substring(1);
+                    } else {
+                        normalizedUrl = normalizedUrlPart + url;
+                    }
+                } else {
+                    normalizedUrl = normalizedUrlPart + "/" + url;
+                }
+            } else {
+                if ((url[0] == "/") || (document.location.href[document.location.href.length] == "/")) {
+                    if ((url[0] == "/") && (document.location.href[document.location.href.length] == "/")) {
+                        normalizedUrl = document.location.href + url.substring(1);
+                    } else {
+                        normalizedUrl = document.location.href + url;
+                    }
+                } else {
+                    normalizedUrl = document.location.href + "/" + url;
+                }
+            }
+            __proxy_normalizedUrl = normalizedUrl;
+            return normalizedUrl;
         } else {
+            __proxy_normalizedUrl = url;
             return url;
         }
     } (adaptiveProxyJQuery);
