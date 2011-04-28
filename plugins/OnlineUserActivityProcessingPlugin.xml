@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plugin SYSTEM "PluginConfiguration.dtd">
+<plugin>
+	<name>OnlineUserActivityProcessingPlugin</name>
+	<classLocation/>
+	<className>sk.fiit.rabbit.adaptiveproxy.plugins.services.socialNavigation.OnlineUserActivityProcessingPlugin</className>
+	<libraries>
+    	<lib>json_simple-1.1.jar</lib>
+  	</libraries>
+	<types>
+		<type>RequestProcessingPlugin</type>
+	</types>
+	<parameters>
+		<param name="pattern">activity/update</param>
+	</parameters>
+</plugin>
