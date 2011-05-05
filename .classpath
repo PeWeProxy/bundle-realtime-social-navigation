@@ -8,6 +8,5 @@
 	<classpathentry kind="lib" path="external_libs/log4j-1.2.15.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/adaptive-proxy"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/adaptive-proxy-plugins-core"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/adaptive-proxy-bundle-messageboard"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
