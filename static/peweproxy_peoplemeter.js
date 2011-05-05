@@ -50,6 +50,7 @@ peweproxy.register_module('rsn', function($) {
 					$("#__proxy_peoplemeter").fadeOut(80);
 					if (data == "OK") __proxy_peoplemeter_active = false;
 				});
+				return false;
 			});
 	  
 			$("#__proxy_peoplemeter_activateButton").click(function () {
@@ -68,6 +69,7 @@ peweproxy.register_module('rsn', function($) {
 						}
 					}
 				});
+				return false;
 			});
 		});
 	});
