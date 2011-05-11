@@ -1,6 +1,5 @@
 package sk.fiit.rabbit.adaptiveproxy.plugins.services.socialNavigation;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -13,8 +12,7 @@ import sk.fiit.peweproxy.messages.ModifiableHttpRequest;
 import sk.fiit.peweproxy.plugins.PluginProperties;
 import sk.fiit.peweproxy.plugins.processing.RequestProcessingPlugin;
 import sk.fiit.peweproxy.services.ProxyService;
-import sk.fiit.peweproxy.services.content.ModifiableStringService;
-import sk.fiit.rabbit.adaptiveproxy.plugins.servicedefinitions.PostDataParserService;
+import sk.fiit.rabbit.adaptiveproxy.plugins.servicedefinitions.UserIdentificationService;
 
 public class OnlineUserActivityProcessingPlugin implements
 	RequestProcessingPlugin {
@@ -36,32 +34,24 @@ public class OnlineUserActivityProcessingPlugin implements
     }
 
     @Override
-    public RequestProcessingActions processRequest(ModifiableHttpRequest request) {	
+    public RequestProcessingActions processRequest(ModifiableHttpRequest request) {
+	if(request.getRequestHeader().getRequestURI().contains(pattern)) {
+	    String user = request.getServicesHandle().getService(UserIdentificationService.class).getClientIdentification();
+	    String url = request.getOriginalRequest().getRequestHeader().getRequestURI().split(pattern)[0];
+	    UserOnlineAccess.push(user, url);
+	}
+	
 	return RequestProcessingActions.PROCEED;
     }
 
     @Override
     public void processTransferedRequest(HttpRequest request) {
-	
-	if(request.getOriginalRequest().getRequestHeader().getRequestURI().contains(pattern)
-		&& request.getServicesHandle().isServiceAvailable(PostDataParserService.class)) {
-	
-	    Map<String, String> postData = request.getServicesHandle().getService(PostDataParserService.class).getPostData();
-        	
-	    if (postData.containsKey("__peweproxy_uid")) {
-        	String user = postData.get("__peweproxy_uid");
-        	String url = request.getOriginalRequest().getRequestHeader().getRequestURI();
-        	UserOnlineAccess.push(user, url);
-	    }
-	}
     }
 
     @Override
     public void desiredRequestServices(
 	    Set<Class<? extends ProxyService>> desiredServices,
 	    RequestHeader clientRQHeader) {
-	desiredServices.add(PostDataParserService.class);
-	desiredServices.add(ModifiableStringService.class);
     }
 
     @Override
