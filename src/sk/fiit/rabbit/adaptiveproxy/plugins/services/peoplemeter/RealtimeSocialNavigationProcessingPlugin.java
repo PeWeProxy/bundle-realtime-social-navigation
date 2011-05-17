@@ -3,7 +3,7 @@ package sk.fiit.rabbit.adaptiveproxy.plugins.services.peoplemeter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
-import org.json.simple.parser.ParseException;
+import org.svenson.JSON;
 
 import sk.fiit.peweproxy.messages.HttpMessageFactory;
 import sk.fiit.peweproxy.messages.HttpResponse;
@@ -38,18 +38,13 @@ public class RealtimeSocialNavigationProcessingPlugin extends BubbleMenuProcessi
 		}
 		if (request.getRequestHeader().getRequestURI().contains("action=updateCounts")) {		    
 		    StringContentService stringContentService = request.getServicesHandle().getService(StringContentService.class);
-		    String json = "";
 		    try {
-			json = URLDecoder.decode(stringContentService.getContent(), "utf-8");
+		    	String json = URLDecoder.decode(stringContentService.getContent(), "utf-8");
+		    	if (json != null) {
+		    		content = UserOnlineAccess.getResponse(json);
+		    	}
 		    } catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		    }
-		    try {
-			if (json != null)
-			    content = UserOnlineAccess.getResponse(json).toJSONString();
-		    } catch (ParseException e) {
-			e.printStackTrace();
+		    	// TODO Auto-generated catch block
 		    }
 		}
 		

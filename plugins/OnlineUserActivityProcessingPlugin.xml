@@ -5,7 +5,6 @@
 	<classLocation/>
 	<className>sk.fiit.rabbit.adaptiveproxy.plugins.services.socialNavigation.OnlineUserActivityProcessingPlugin</className>
 	<libraries>
-    	<lib>json_simple-1.1.jar</lib>
     	<lib>log4j-1.2.15.jar</lib>
   	</libraries>
 	<types>

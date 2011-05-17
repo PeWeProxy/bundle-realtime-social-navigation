@@ -1,12 +1,14 @@
 package sk.fiit.rabbit.adaptiveproxy.plugins.services.socialNavigation;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.svenson.JSON;
+import org.svenson.JSONParser;
 
 public class UserOnlineAccess {
     
@@ -41,21 +43,21 @@ public class UserOnlineAccess {
 	}	
     }
     
-    public static JSONObject getResponse(String reqJson) throws ParseException{
+    public static String getResponse(String reqJson) {
 	
-	JSONObject json = (JSONObject) new JSONParser().parse(reqJson);
-	JSONArray array = (JSONArray) json.get("pageUrlList");
+	LinkedHashMap json = JSONParser.defaultJSONParser().parse(LinkedHashMap.class, reqJson);
+	List array = (List) json.get("pageUrlList");
 	
-	JSONObject retJson = new JSONObject();
-	JSONArray retArray = new JSONArray();
+	Map retJson = new HashMap();
+	List retArray = new ArrayList();
 
 	for (int i = 0; i < array.size(); i++) {
-	    JSONObject j = (JSONObject) array.get(i);
+	    LinkedHashMap j = (LinkedHashMap) array.get(i);
 	    String id = (String) j.get("id");
 	    String url = (String) j.get("url");
 	    int count = getByUrl(url);
 		
-	    j = new JSONObject();
+	    j = new LinkedHashMap();
 	    j.put("id", id);
 	    j.put("count", count);
 	    
@@ -64,7 +66,7 @@ public class UserOnlineAccess {
 	
 	retJson.put("peopleCount", retArray);
 	
-	return retJson;
+	return JSON.defaultJSON().forValue(retJson);
     }
     
     private static int getByUrl(String url){
