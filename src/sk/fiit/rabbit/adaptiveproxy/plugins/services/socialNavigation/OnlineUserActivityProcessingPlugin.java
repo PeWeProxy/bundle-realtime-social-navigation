@@ -12,6 +12,9 @@ import sk.fiit.peweproxy.messages.ModifiableHttpRequest;
 import sk.fiit.peweproxy.plugins.PluginProperties;
 import sk.fiit.peweproxy.plugins.processing.RequestProcessingPlugin;
 import sk.fiit.peweproxy.services.ProxyService;
+import sk.fiit.peweproxy.services.content.ModifiableStringService;
+import sk.fiit.rabbit.adaptiveproxy.plugins.servicedefinitions.LoggingBackendService;
+import sk.fiit.rabbit.adaptiveproxy.plugins.servicedefinitions.RequestDataParserService;
 import sk.fiit.rabbit.adaptiveproxy.plugins.servicedefinitions.UserIdentificationService;
 
 public class OnlineUserActivityProcessingPlugin implements
@@ -35,10 +38,11 @@ public class OnlineUserActivityProcessingPlugin implements
 
     @Override
     public RequestProcessingActions processRequest(ModifiableHttpRequest request) {
-	if(request.getRequestHeader().getRequestURI().contains(pattern)) {
-	    String user = request.getServicesHandle().getService(UserIdentificationService.class).getClientIdentification();
-	    String url = request.getOriginalRequest().getRequestHeader().getRequestURI().split(pattern)[0];
-	    UserOnlineAccess.push(user, url);
+	String requestURI = request.getRequestHeader().getRequestURI();
+    	if(requestURI.contains(pattern)) {
+		    String user = request.getServicesHandle().getService(UserIdentificationService.class).getClientIdentification();
+		    String url = request.getOriginalRequest().getRequestHeader().getField("referer");
+		    UserOnlineAccess.push(user, url);
 	}
 	
 	return RequestProcessingActions.PROCEED;
@@ -52,6 +56,9 @@ public class OnlineUserActivityProcessingPlugin implements
     public void desiredRequestServices(
 	    Set<Class<? extends ProxyService>> desiredServices,
 	    RequestHeader clientRQHeader) {
+		desiredServices.add(ModifiableStringService.class);
+		desiredServices.add(RequestDataParserService.class);
+		desiredServices.add(LoggingBackendService.class);
     }
 
     @Override

@@ -9,7 +9,7 @@ peweproxy.register_module('rsn', function($) {
 	var __proxy_normalizedUrl = "";
 	
 	$(document).ready(function() {
-		__ap_register_callback(function(){
+		 peweproxy.on_uid_ready(function(){
 			$(peoplemeterButonSelector).click(function(){
 				$('#__proxy_peoplemeterMenu').hide().removeClass('hidden').fadeIn('fast');
 				return false;
@@ -24,7 +24,7 @@ peweproxy.register_module('rsn', function($) {
 			__proxy_initializeTracking();
 	  
 	  
-			$.post('adaptive-proxy/peoplemeter_call.html?action=getPeoplemeterActivity&userId=' + __peweproxy_uid, {
+			$.post('adaptive-proxy/peoplemeter_call.html?action=getPeoplemeterActivity&userId=' + peweproxy.uid, {
 				action: "getPeoplemeterActivity"
 			}, function(data) {
 				if (data === "TRUE") {
@@ -44,7 +44,7 @@ peweproxy.register_module('rsn', function($) {
 			$("#__proxy_peoplemeter_deactivateButton").click(function () {
 				$("#__proxy_peoplemeter_serviceActivated").css("display", "none");
 				$("#__proxy_peoplemeter_serviceDeactivated").css("display", "block");
-				$.post('adaptive-proxy/peoplemeter_call.html?action=setPeoplemeterActivity&activity=false&userId=' + __peweproxy_uid, {
+				$.post('adaptive-proxy/peoplemeter_call.html?action=setPeoplemeterActivity&activity=false&userId=' + peweproxy.uid, {
 					action: "setPeoplemeterActivity"
 				}, function(data) {
 					$("#__proxy_peoplemeter").fadeOut(80);
@@ -56,7 +56,7 @@ peweproxy.register_module('rsn', function($) {
 			$("#__proxy_peoplemeter_activateButton").click(function () {
 				$("#__proxy_peoplemeter_serviceActivated").css("display", "block");
 				$("#__proxy_peoplemeter_serviceDeactivated").css("display", "none");
-				$.post('adaptive-proxy/peoplemeter_call.html?action=setPeoplemeterActivity&activity=true&userId=' + __peweproxy_uid, {
+				$.post('adaptive-proxy/peoplemeter_call.html?action=setPeoplemeterActivity&activity=true&userId=' + peweproxy.uid, {
 					action: "setPeoplemeterActivity"
 				},function(data) {
 					if (data == "OK") {
