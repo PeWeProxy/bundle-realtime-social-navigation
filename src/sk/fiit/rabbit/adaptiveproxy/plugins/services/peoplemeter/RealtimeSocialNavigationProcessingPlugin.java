@@ -27,7 +27,7 @@ public class RealtimeSocialNavigationProcessingPlugin extends BubbleMenuProcessi
 		
 		if (request.getRequestHeader().getRequestURI().contains("action=getPeoplemeterActivity")) {
 		    //String uid = url.split("&")[1].split("=")[1];
-		    content = "true";
+		    content = "TRUE";
 		}
 		if (request.getRequestHeader().getRequestURI().contains("action=setPeoplemeterActivity")) {
 		    //String activity = url.split("&")[1].split("=")[1];

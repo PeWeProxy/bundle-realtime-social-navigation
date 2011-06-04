@@ -77,9 +77,12 @@
                     </span>
                     <div class="__proxy_peoplemeter_textBox_Wrapper">
                             <div class="__proxy_peoplemeter_textBox" id="__proxy_peoplemeter_textBox">
-                                Po aktivavaní tejto služby môžete pri každom odkaze sledovať koľko ľudí práve prehliada stránku na ktorú smeruje odkaz.<br /><br />
-                                <div id="__proxy_peoplemeter_serviceActivated" class="__proxy_peoplemeter_serviceActivated">Táto služba je momentálne aktívna. Prajete si ju deaktivovať? <p><a class="__proxy_peoplemeter_activity_button" id="__proxy_peoplemeter_deactivateButton" href="#">Deaktivovať</a></p></div>
-                                <div id="__proxy_peoplemeter_serviceDeactivated" class="__proxy_peoplemeter_serviceDeactivated">Táto služba nie je aktivovanť. Prajete si ju aktivovať? <p> <a class="__proxy_peoplemeter_activity_button" id="__proxy_peoplemeter_activateButton" href="#">Aktivovať</a></p></div>
+                                Tuto aha, kolko liniek.
+                                <div>
+                                	<table id="__proxy_peoplemeter_url_list_table">
+                                		
+                                	</table>
+                                </div>
                             </div>
                     </div>
             </div>

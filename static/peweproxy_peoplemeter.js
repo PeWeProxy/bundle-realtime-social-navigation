@@ -29,21 +29,15 @@ peweproxy.register_module('rsn', function($) {
 			}, function(data) {
 				if (data === "TRUE") {
 					__proxy_peoplemeter_active = true
-					$("#__proxy_peoplemeter_serviceActivated").css("display", "block");
-					$("#__proxy_peoplemeter_serviceDeactivated").css("display", "none");
 					__proxy_updatePeoplemeter();
 					setInterval("peweproxy.modules.rsn.__proxy_updatePeoplemeter()",8000);
 				}
 				else {
 					__proxy_peoplemeter_active = false;
-					$("#__proxy_peoplemeter_serviceActivated").css("display", "none");
-					$("#__proxy_peoplemeter_serviceDeactivated").css("display", "block");
 				}
 			});
 	  
 			$("#__proxy_peoplemeter_deactivateButton").click(function () {
-				$("#__proxy_peoplemeter_serviceActivated").css("display", "none");
-				$("#__proxy_peoplemeter_serviceDeactivated").css("display", "block");
 				$.post('adaptive-proxy/peoplemeter_call.html?action=setPeoplemeterActivity&activity=false&userId=' + peweproxy.uid, {
 					action: "setPeoplemeterActivity"
 				}, function(data) {
@@ -54,8 +48,6 @@ peweproxy.register_module('rsn', function($) {
 			});
 	  
 			$("#__proxy_peoplemeter_activateButton").click(function () {
-				$("#__proxy_peoplemeter_serviceActivated").css("display", "block");
-				$("#__proxy_peoplemeter_serviceDeactivated").css("display", "none");
 				$.post('adaptive-proxy/peoplemeter_call.html?action=setPeoplemeterActivity&activity=true&userId=' + peweproxy.uid, {
 					action: "setPeoplemeterActivity"
 				},function(data) {
@@ -98,10 +90,10 @@ peweproxy.register_module('rsn', function($) {
 	
 	var __proxy_normalizeUrl = function(url) {
 		if ((url.substr(0, 7) != "http://") && (url.substr(0, 8) != "https://")) {
-			if (document.location.pathname.indexOf(".") >= 0) {
-				normalizedUrlPart = document.location.href.substring(0, document.location.href.lastIndexOf("/"));
-				if ((url[0] == "/") || (normalizedUrlPart[normalizedUrlPart.length] == "/")) {
-					if ((url[0] == "/") && (normalizedUrlPart[normalizedUrlPart.length] == "/")) {
+			if (url.indexOf(".") == 0) {
+				normalizedUrlPart = document.domain.substring(0, document.domain.lastIndexOf("/"));
+				if ((url[0] == "/") || (normalizedUrlPart[normalizedUrlPart.length - 1] == "/")) {
+					if ((url[0] == "/") && (normalizedUrlPart[normalizedUrlPart.length - 1] == "/")) {
 						normalizedUrl = normalizedUrlPart + url.substring(1);
 					} else {
 						normalizedUrl = normalizedUrlPart + url;
@@ -110,18 +102,18 @@ peweproxy.register_module('rsn', function($) {
 					normalizedUrl = normalizedUrlPart + "/" + url;
 				}
 			} else {
-				if ((url[0] == "/") || (document.location.href[document.location.href.length] == "/")) {
-					if ((url[0] == "/") && (document.location.href[document.location.href.length] == "/")) {
-						normalizedUrl = document.location.href + url.substring(1);
+				if ((url[0] == "/") || (document.domain[document.domain.length - 1] == "/")) {
+					if ((url[0] == "/") && (document.domain[document.domain.length - 1] == "/")) {
+						normalizedUrl = document.domain + url.substring(1);
 					} else {
-						normalizedUrl = document.location.href + url;
+						normalizedUrl = document.domain + url;
 					}
 				} else {
-					normalizedUrl = document.location.href + "/" + url;
+					normalizedUrl = document.domain + "/" + url;
 				}
 			}
-			__proxy_normalizedUrl = normalizedUrl;
-			return normalizedUrl;
+			__proxy_normalizedUrl = "http://" + normalizedUrl;
+			return __proxy_normalizedUrl;
 		} else {
 			__proxy_normalizedUrl = url;
 			return url;
@@ -192,8 +184,16 @@ peweproxy.register_module('rsn', function($) {
 			$.each(response.peopleCount, function(index, value) {
 				__proxy_followedPages[value.id][2] = value.count;
 			});
+                        __proxy_fillInUrlList();
 		});
 	}
+
+        var __proxy_fillInUrlList = function() {
+            $("#__proxy_peoplemeter_url_list_table").text("");
+            $.each(__proxy_followedPages, function(index, value){
+                $("#__proxy_peoplemeter_url_list_table").append("<tr><td>url: " + $(value)[1] + ", count: " + $(value)[2] + "</td></tr>");
+            });
+        }
 
 	this.__proxy_updatePeoplemeter = __proxy_updatePeoplemeter;
 
