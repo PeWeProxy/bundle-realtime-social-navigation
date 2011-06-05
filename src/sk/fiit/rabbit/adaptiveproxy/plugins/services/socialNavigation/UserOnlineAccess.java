@@ -97,7 +97,7 @@ public class UserOnlineAccess {
 		static Map<String, String> instance;
 		
 		static {
-			instance = new HashMap<String, String>();
+			instance = Collections.synchronizedMap(new HashMap<String, String>());
 		}
 
 		public static Map<String, String> getInstance() {
@@ -109,7 +109,7 @@ public class UserOnlineAccess {
 		static Map<String, Integer> instance;
 		
 		static {
-			instance = new HashMap<String, Integer>();
+			instance = Collections.synchronizedMap(new HashMap<String, Integer>());
 		}
 
 		public static Map<String, Integer> getInstance() {
