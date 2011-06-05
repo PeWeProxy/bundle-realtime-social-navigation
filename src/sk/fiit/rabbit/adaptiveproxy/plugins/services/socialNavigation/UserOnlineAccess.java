@@ -13,7 +13,6 @@ public class UserOnlineAccess {
     
 	private static Map<String, String> mapUserUrl;
     private static Map<String, Integer> mapUrlCount;
-    private static Object syncObject_;
     
 	public static void push(String user, String url) {
 		Map<String, String> userUrlMap = getInstanceUserUrl();
@@ -87,16 +86,34 @@ public class UserOnlineAccess {
     }
     
 	private static Map<String, String> getInstanceUserUrl() {
-		if (mapUserUrl == null) {
-			mapUserUrl = Collections.synchronizedMap (new HashMap<String, String>());
-		}
-		return mapUserUrl;
+		return UserUrlHolder.getInstance();
 	}
 
 	private static Map<String, Integer> getInstanceUrlCount() {
-		if (mapUrlCount == null) {
-			mapUrlCount = Collections.synchronizedMap (new HashMap<String, Integer>());
+		return UrlCountHolder.getInstance();
+	}
+	
+	static class UserUrlHolder {
+		static Map<String, String> instance;
+		
+		static {
+			instance = new HashMap<String, String>();
 		}
-		return mapUrlCount;
+
+		public static Map<String, String> getInstance() {
+			return instance;
+		}
+	}
+	
+	static class UrlCountHolder {
+		static Map<String, Integer> instance;
+		
+		static {
+			instance = new HashMap<String, Integer>();
+		}
+
+		public static Map<String, Integer> getInstance() {
+			return instance;
+		}
 	}
 }
