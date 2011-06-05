@@ -1,6 +1,8 @@
 package sk.fiit.rabbit.adaptiveproxy.plugins.services.socialNavigation;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,8 +11,9 @@ import org.svenson.JSONParser;
 
 public class UserOnlineAccess {
     
-    private static HashMap<String, String> mapUserUrl;
-    private static HashMap<String, Integer> mapUrlCount;
+	private static Map<String, String> mapUserUrl;
+    private static Map<String, Integer> mapUrlCount;
+    private static Object syncObject_;
     
 	public static void push(String user, String url) {
 		Map<String, String> userUrlMap = getInstanceUserUrl();
@@ -83,19 +86,17 @@ public class UserOnlineAccess {
 	return 0;
     }
     
-    private static Map<String, String> getInstanceUserUrl(){
-	if (mapUserUrl == null)
-	{
-	    mapUserUrl = new HashMap<String, String>();
+	private static Map<String, String> getInstanceUserUrl() {
+		if (mapUserUrl == null) {
+			mapUserUrl = Collections.synchronizedMap (new HashMap<String, String>());
+		}
+		return mapUserUrl;
 	}
-	return mapUserUrl;
-    }
-    
-    private static Map<String, Integer> getInstanceUrlCount(){
-	if (mapUrlCount == null)
-	{
-	    mapUrlCount = new HashMap<String, Integer>();
+
+	private static Map<String, Integer> getInstanceUrlCount() {
+		if (mapUrlCount == null) {
+			mapUrlCount = Collections.synchronizedMap (new HashMap<String, Integer>());
+		}
+		return mapUrlCount;
 	}
-	return mapUrlCount;
-    }
 }
