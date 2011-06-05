@@ -73,11 +73,11 @@
             </div>
             <div class="__proxy_peoplemeter_body">
                     <span class="__proxy_peoplemeter_header">
-                            <span class="__proxy_peoplemeter_left_floated">Sledovanie aktívnych užívateľov</span>
+                            <span class="__proxy_peoplemeter_left_floated">Sledovanie aktivity používateľov</span>
                     </span>
                     <div class="__proxy_peoplemeter_textBox_Wrapper">
                             <div class="__proxy_peoplemeter_textBox" id="__proxy_peoplemeter_textBox">
-                                Tuto aha, kolko liniek.
+                                Zoznm najaktívnejších odkazov:
                                 <div>
                                 	<table id="__proxy_peoplemeter_url_list_table">
                                 		

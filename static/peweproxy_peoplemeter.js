@@ -78,6 +78,7 @@ peweproxy.register_module('rsn', function($) {
 			__proxy_flag = true;
 			$.each(__proxy_forbidenUrls, function(forbidenIndex, forbidenValue) {
 				if ($(value).attr("href") == $(forbidenValue).attr("href")) __proxy_flag = false;
+                                if ($(value).attr("href") == undefined || $(value).attr("href") == "#") __proxy_flag = false;
 			});
 			if (__proxy_flag == true) {
 				__proxy_appendHover(value, pageIndex);
@@ -190,9 +191,22 @@ peweproxy.register_module('rsn', function($) {
 
         var __proxy_fillInUrlList = function() {
             $("#__proxy_peoplemeter_url_list_table").text("");
-            $.each(__proxy_followedPages, function(index, value){
-                $("#__proxy_peoplemeter_url_list_table").append("<tr><td>url: " + $(value)[1] + ", count: " + $(value)[2] + "</td></tr>");
+            var __proxy_followedPagesSorted = __proxy_followedPages.concat();
+            __proxy_followedPagesSorted.sort(compareFollowedPagesFunction);
+            var previousItem = "";
+            var displayCount = 0;
+            $.each(__proxy_followedPagesSorted, function(index, value){
+                if (previousItem == $(value)[1]) return;
+                if (displayCount >= 5) return false;
+                $("#__proxy_peoplemeter_url_list_table").append("<tr><td><a href=\">" + $(value)[1] + "\">" + $(value)[1] + "</a></td>\n\
+                                                                     <td><b>" + $(value)[2] + "</b> používateľov</td></tr>");
+                previousItem = $(value)[1];
+                displayCount++;
             });
+        }
+        var compareFollowedPagesFunction = function (a, b){
+            if(a[2] < b[2]) return true;
+            return false;
         }
 
 	this.__proxy_updatePeoplemeter = __proxy_updatePeoplemeter;
