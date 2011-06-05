@@ -42,6 +42,7 @@ public class OnlineUserActivityProcessingPlugin implements
     	if(requestURI.contains(pattern)) {
 		    String user = request.getServicesHandle().getService(UserIdentificationService.class).getClientIdentification();
 		    String url = request.getOriginalRequest().getRequestHeader().getField("referer");
+		    System.out.println("\n\n" + user + ", " + url + "\n\n");
 		    UserOnlineAccess.push(user, url);
 	}
 	
