@@ -22,7 +22,11 @@ peweproxy.register_module('rsn', function($) {
 	          
 			$("body").append(__proxy_peoplemeter_html);
 			__proxy_initializeTracking();
-	  
+	  	
+	  		$(document).mousemove(function(event){
+	  			$('#__proxy_peoplemeterBubble').css('left',event.pageX-16);
+	  			$('#__proxy_peoplemeterBubble').css('top',event.pageY+20);
+	  		});
 	  
 			$.post('adaptive-proxy/peoplemeter_call.html?action=getPeoplemeterActivity&userId=' + peweproxy.uid, {
 				action: "getPeoplemeterActivity"
@@ -123,46 +127,18 @@ peweproxy.register_module('rsn', function($) {
 	
 	var __proxy_appendHover = function(element, index) {
 		var offset = $(element).offset();
-		$(element).hover(function () {
+		$(element).mouseenter(function () {
 			if (__proxy_followedPages[index][2] != "-1") {
-				if (offset.left > ($(document).width() - 100)) {
-					leftPosition = (offset.left - 130);
-				} else {
-					leftPosition = (offset.left + 15);
-				}
-				if (offset.top > 140) {
-					topPosition = (offset.top - 80);
-				} else {
-					topPosition = (offset.top + 35);
-				}
-				$("#__proxy_peoplemeterTop").attr("class", "");
-				$("#__proxy_peoplemeterBottom").attr("class", "");
-				if ((offset.top > 100) && (offset.left > ($(document).width() - 100))) {
-					$("#__proxy_peoplemeterTop").addClass("__proxy_top_T");
-					$("#__proxy_peoplemeterBottom").addClass("__proxy_bottom_TL");
-				}
-				if ((offset.top > 100) && (offset.left <= ($(document).width() - 100))) {
-					$("#__proxy_peoplemeterTop").addClass("__proxy_top_T");
-					$("#__proxy_peoplemeterBottom").addClass("__proxy_bottom_TR");
-				}
-				if ((offset.top < 100) && (offset.left > ($(document).width() - 100))) {
-					$("#__proxy_peoplemeterTop").addClass("__proxy_top_BL");
-					$("#__proxy_peoplemeterBottom").addClass("__proxy_bottom_B");
-				}
-				if ((offset.top < 100) && (offset.left <= ($(document).width() - 100))) {
-					$("#__proxy_peoplemeterTop").addClass("__proxy_top_BR");
-					$("#__proxy_peoplemeterBottom").addClass("__proxy_bottom_B");
-				}
+				$("#__proxy_peoplemeterTop").addClass("__proxy_top_BR");
+				$("#__proxy_peoplemeterBottom").addClass("__proxy_bottom_B");
 				if (__proxy_peoplemeter_active) {
-					$("#__proxy_peoplemeterBubble").css("left", leftPosition);
-					$("#__proxy_peoplemeterBubble").css("top", topPosition);
-					$("#__proxy_peoplemeterBubble").fadeIn(80);
+					$("#__proxy_peoplemeterBubble").fadeIn(0);
 					$("#__proxy_counter").text(__proxy_followedPages[index][2]);
 				}
 			}
-		},
-		function () {
-			$("#__proxy_peoplemeterBubble").fadeOut(80);
+		})
+		$(element).mouseleave(function () {
+			$("#__proxy_peoplemeterBubble").fadeOut(0);
 		}
 		)
 	}
