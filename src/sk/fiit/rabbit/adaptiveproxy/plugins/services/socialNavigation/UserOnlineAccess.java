@@ -86,10 +86,12 @@ public class UserOnlineAccess {
     }
     
 	private static Map<String, String> getInstanceUserUrl() {
+		System.err.println("userUrl:" + UserUrlHolder.getInstance());
 		return UserUrlHolder.getInstance();
 	}
 
 	private static Map<String, Integer> getInstanceUrlCount() {
+		System.err.println("urlCount:" + UserUrlHolder.getInstance());
 		return UrlCountHolder.getInstance();
 	}
 	
