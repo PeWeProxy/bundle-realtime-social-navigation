@@ -18,64 +18,68 @@ import sk.fiit.rabbit.adaptiveproxy.plugins.servicedefinitions.RequestDataParser
 import sk.fiit.rabbit.adaptiveproxy.plugins.servicedefinitions.UserIdentificationService;
 
 public class OnlineUserActivityProcessingPlugin implements
-	RequestProcessingPlugin {
-    
-    protected Logger logger = Logger.getLogger(OnlineUserActivityProcessingPlugin.class);
-    
-    private String pattern = null;
-    
-    @Override
-    public HttpRequest getNewRequest(ModifiableHttpRequest request,
-	    HttpMessageFactory messageFactory) {
-	return null;
-    }
+		RequestProcessingPlugin {
 
-    @Override
-    public HttpResponse getResponse(ModifiableHttpRequest request,
-	    HttpMessageFactory messageFactory) {
-	return null;
-    }
+	protected Logger logger = Logger
+			.getLogger(OnlineUserActivityProcessingPlugin.class);
 
-    @Override
-    public RequestProcessingActions processRequest(ModifiableHttpRequest request) {
-	String requestURI = request.getRequestHeader().getRequestURI();
-    	if(requestURI.contains(pattern)) {
-		    String user = request.getServicesHandle().getService(UserIdentificationService.class).getClientIdentification();
-		    String url = request.getOriginalRequest().getRequestHeader().getField("referer");
-		    System.out.println("\n\n" + user + ", " + url + "\n\n");
-		    UserOnlineAccess.push(user, url);
+	private String pattern = null;
+
+	@Override
+	public HttpRequest getNewRequest(ModifiableHttpRequest request,
+			HttpMessageFactory messageFactory) {
+		return null;
 	}
-	
-	return RequestProcessingActions.PROCEED;
-    }
 
-    @Override
-    public void processTransferedRequest(HttpRequest request) {
-    }
+	@Override
+	public HttpResponse getResponse(ModifiableHttpRequest request,
+			HttpMessageFactory messageFactory) {
+		return null;
+	}
 
-    @Override
-    public void desiredRequestServices(
-	    Set<Class<? extends ProxyService>> desiredServices,
-	    RequestHeader clientRQHeader) {
+	@Override
+	public RequestProcessingActions processRequest(ModifiableHttpRequest request) {
+		String requestURI = request.getRequestHeader().getRequestURI();
+		if (requestURI.contains(pattern)) {
+			String user = request.getServicesHandle()
+					.getService(UserIdentificationService.class)
+					.getClientIdentification();
+			String url = request.getOriginalRequest().getRequestHeader()
+					.getField("referer");
+			System.out.println("\n\n" + user + ", " + url + "\n\n");
+			UserOnlineAccess.push(user, url);
+		}
+
+		return RequestProcessingActions.PROCEED;
+	}
+
+	@Override
+	public void processTransferedRequest(HttpRequest request) {
+	}
+
+	@Override
+	public void desiredRequestServices(
+			Set<Class<? extends ProxyService>> desiredServices,
+			RequestHeader clientRQHeader) {
 		desiredServices.add(ModifiableStringService.class);
 		desiredServices.add(RequestDataParserService.class);
 		desiredServices.add(LoggingBackendService.class);
-    }
+	}
 
-    @Override
-    public boolean start(PluginProperties props) {
-	pattern = props.getProperty("pattern");
-	
-	return true;
-    }
+	@Override
+	public boolean start(PluginProperties props) {
+		pattern = props.getProperty("pattern");
 
-    @Override
-    public void stop() {
-    }
+		return true;
+	}
 
-    @Override
-    public boolean supportsReconfigure(PluginProperties newProps) {
-	return false;
-    }
+	@Override
+	public void stop() {
+	}
+
+	@Override
+	public boolean supportsReconfigure(PluginProperties newProps) {
+		return false;
+	}
 
 }
