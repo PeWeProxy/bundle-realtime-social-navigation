@@ -174,7 +174,7 @@ peweproxy.register_module('rsn', function($) {
             $.each(__proxy_followedPagesSorted, function(index, value){
                 if (previousItem == $(value)[1]) return;
                 if (displayCount >= 5) return false;
-                $("#__proxy_peoplemeter_url_list_table").append("<tr><td><a href=\">" + $(value)[1] + "\">" + $(value)[1] + "</a></td>\n\
+                $("#__proxy_peoplemeter_url_list_table").append("<tr><td class=\"first\"><a title=\"" + $(value)[1] + "\" href=\"" + $(value)[1] + "\">" + $(value)[1] + "</a></td>\n\
                                                                      <td><b>" + $(value)[2] + "</b> používateľov</td></tr>");
                 previousItem = $(value)[1];
                 displayCount++;

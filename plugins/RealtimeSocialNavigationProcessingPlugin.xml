@@ -51,9 +51,14 @@
             .__proxy_peoplemeter_head .__proxy_peoplemeter_closebutton { background-image: url("${plugins-core:assets-path}/clientBubbleMenuImages/close_button.png"); background-position: center top; display: block; height: 22px; position: absolute; right: 1px; top: 1px; width: 22px; }
             .__proxy_peoplemeter_head .__proxy_peoplemeter_closebutton:hover { background-position: bottom; }
 
-            .__proxy_peoplemeter_body { background-image: url("${plugins-core:assets-path}/clientBubbleMenuImages/panel_body.png"); float: left; height: 177px; padding: 0 20px 0 16px; width: 296px; }
+            .__proxy_peoplemeter_body { background-image: url("${plugins-core:assets-path}/clientBubbleMenuImages/panel_body.png"); float: left; padding: 0 20px 0 16px; width: 296px; }
             .__proxy_peoplemeter_body .__proxy_peoplemeter_header { background-image: url("${plugins-core:assets-path}/peoplemeterImages/signDirection.png"); font-size: 17px; background-repeat: no-repeat; padding-left: 28px; background-position: 0 1px; }
             .__proxy_peoplemeter_body .__proxy_peoplemeter_header .__proxy_peoplemeter_left_floated {}
+
+			#peweproxy_addons_container table td {font-family: 'Trebuchet MS',Verdana,Arial; font-size: 12px;}
+			#__proxy_peoplemeter_url_list_table td.first {display: block; margin-right: 5px; overflow: hidden; width: 200px;}
+			#__proxy_peoplemeter_url_list_table td.first a {display: block; overflow: hidden; width: 5000px; color:#A7090C; size: 12px; text-decoration: none; border: none}
+			#__proxy_peoplemeter_url_list_table td.first a:hover {text-decoration: underline;}
 
             .__proxy_peoplemeter_textBox_Wrapper {}
             .__proxy_peoplemeter_textBox_Wrapper .__proxy_peoplemeter_textBox { height: 100px; margin-top: 11px; }
@@ -78,7 +83,7 @@
                     <div class="__proxy_peoplemeter_textBox_Wrapper">
                             <div class="__proxy_peoplemeter_textBox" id="__proxy_peoplemeter_textBox">
                                 Zoznm najaktívnejších odkazov:
-                                <div>
+                                <div style="float:left">
                                 	<table id="__proxy_peoplemeter_url_list_table">
                                 		
                                 	</table>
