@@ -11,8 +11,8 @@ import org.svenson.JSONParser;
 
 public class UserOnlineAccess {
 
-	private static Map<String, String> mapUserUrl;
-	private static Map<String, Integer> mapUrlCount;
+	private static Map<String, String> mapUserUrl = new HashMap<String, String>();
+	private static Map<String, Integer> mapUrlCount = new HashMap<String, Integer>();
 
 	public static void push(String user, String url) {
 		Map<String, String> userUrlMap = getInstanceUserUrl();
@@ -78,36 +78,12 @@ public class UserOnlineAccess {
 	}
 
 	private static Map<String, String> getInstanceUserUrl() {
-		System.err.println("userUrl:" + UserUrlHolder.getInstance());
-		return UserUrlHolder.getInstance();
+		System.err.println("userUrl:" + mapUserUrl);
+		return mapUserUrl;
 	}
 
 	private static Map<String, Integer> getInstanceUrlCount() {
-		System.err.println("urlCount:" + UserUrlHolder.getInstance());
-		return UrlCountHolder.getInstance();
-	}
-
-	static class UserUrlHolder {
-		static Map<String, String> instance;
-
-		static {
-			instance = Collections.synchronizedMap(new HashMap<String, String>());
-		}
-
-		public static Map<String, String> getInstance() {
-			return instance;
-		}
-	}
-
-	static class UrlCountHolder {
-		static Map<String, Integer> instance;
-
-		static {
-			instance = Collections.synchronizedMap(new HashMap<String, Integer>());
-		}
-
-		public static Map<String, Integer> getInstance() {
-			return instance;
-		}
+		System.err.println("urlCount:" + mapUrlCount);
+		return mapUrlCount;
 	}
 }
