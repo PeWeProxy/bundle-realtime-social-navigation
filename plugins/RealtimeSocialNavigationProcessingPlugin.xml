@@ -16,6 +16,9 @@
 		<param name="generateResponse">true</param>
 		<param name="defaultVisibility">0</param>
 		<param name="scriptUrl">${plugins-core:assets-path}/peweproxy_peoplemeter.js</param>
+		<param name="preferenceNamespace">rsn</param>
+		<param name="preferenceLabel">Sociálna navigácia</param>
+		<param name="preferences">link_count|Počet linkov</param>
 				<param name="windowHTML">
 <![CDATA[
 

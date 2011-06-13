@@ -171,9 +171,11 @@ peweproxy.register_module('rsn', function($) {
             __proxy_followedPagesSorted.sort(compareFollowedPagesFunction);
             var previousItem = "";
             var displayCount = 0;
+            var max_displayCount = $.trim($("#rsn_link_count .__peweproxy_preference_table_value .__peweproxy_preference_row_display").text());
+            max_displayCount = max_displayCount == "" ? 5 : max_displayCount;
             $.each(__proxy_followedPagesSorted, function(index, value){
                 if (previousItem == $(value)[1]) return;
-                if (displayCount >= 5) return false;
+                if (displayCount >= max_displayCount) return false;
                 $("#__proxy_peoplemeter_url_list_table").append("<tr><td class=\"first\"><a title=\"" + $(value)[1] + "\" href=\"" + $(value)[1] + "\">" + $(value)[1] + "</a></td>\n\
                                                                      <td><b>" + $(value)[2] + "</b> používateľov</td></tr>");
                 previousItem = $(value)[1];
