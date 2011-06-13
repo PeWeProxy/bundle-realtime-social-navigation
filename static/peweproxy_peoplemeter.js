@@ -34,7 +34,7 @@ peweproxy.register_module('rsn', function($) {
 				if (data === "TRUE") {
 					__proxy_peoplemeter_active = true
 					__proxy_updatePeoplemeter();
-					setInterval("peweproxy.modules.rsn.__proxy_updatePeoplemeter()",8000);
+					setInterval("peweproxy.modules.rsn.__proxy_updatePeoplemeter()",4000);
 				}
 				else {
 					__proxy_peoplemeter_active = false;
@@ -59,7 +59,7 @@ peweproxy.register_module('rsn', function($) {
 						__proxy_peoplemeter_active = true;
 						__proxy_updatePeoplemeter();
 						if (__proxy_peoplemeter_active_after_onload) {
-							setInterval("peweproxy.modules.rsn.__proxy_updatePeoplemeter()",8000);
+							setInterval("peweproxy.modules.rsn.__proxy_updatePeoplemeter()",4000);
 						} else {
 							__proxy_peoplemeter_active_after_onload = false;
 						}
